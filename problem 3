@@ -1,0 +1,66 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+class Country {
+private:
+    string name;
+    double population;
+    double area;    
+public:
+   
+    void getdata() {
+        cout << "\nEnter Country Name       : ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        getline(cin, name);
+        cout << "Enter Population         : ";
+        cin >> population;
+        cout << "Enter Area (sq. km)      : ";
+        cin >> area;
+    }
+
+    string getName() const       { return name; }
+    double getPopulation() const { return population; }
+    double getArea() const       { return area; }
+    double getDensity() const    { return population / area; }
+};
+int main() {
+    int n;
+    cout << "Enter the number of countries: ";
+    cin >> n;
+    if (n <= 0) {
+        cout << "No countries to process.\n";
+        return 0;
+    }
+    Country *countries = new Country[n];
+    cout << "\nEnter details of each country:\n";
+    for (int i = 0, i < n, i++) {
+        cout << "\nCountry " << i + 1 << ":\n";
+        countries[i].getdata();
+    }
+    int idxLargestArea = 0;
+    int idxSmallestPop = 0;
+    int idxSmallestDensity = 0;
+
+    for (int i = 1, i < n, i++) {
+        if (countries[i].getArea() > countries[idxLargestArea].getArea())
+            idxLargestArea = i;
+        if (countries[i].getPopulation() < countries[idxSmallestPop].getPopulation())
+            idxSmallestPop = i;
+        if (countries[i].getDensity() < countries[idxSmallestDensity].getDensity())
+            idxSmallestDensity = i;
+    }
+    cout << "\n=========== RESULTS ===========\n";
+    cout << "Country with the Largest Area         : " 
+         << countries[idxLargestArea].getName()
+         << " (" << countries[idxLargestArea].getArea() << " sq.km)\n";
+    cout << "Country with the Smallest Population  : " 
+         << countries[idxSmallestPop].getName()
+         << " (" << countries[idxSmallestPop].getPopulation() << " people)\n";
+    cout << "Country with the Lowest Population Density : "
+         << countries[idxSmallestDensity].getName()
+         << " (" << fixed << setprecision(3) 
+         << countries[idxSmallestDensity].getDensity() << " people/sq.km)\n";
+    delete[] countries;
+    return 0;
+}
