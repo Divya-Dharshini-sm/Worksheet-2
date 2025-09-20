@@ -1,0 +1,66 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+using namespace std;
+class Batsman {
+private:
+    int  bcode;
+    char bname[50];
+    int  innings;
+    int  notout;
+    int  runs;
+    float batavg;
+public:
+    void getdata() {
+        cout << "\nEnter Batsman Code: ";
+        cin >> bcode;
+        cin.ignore();
+        cout << "Enter Batsman Name: ";
+        cin.getline(bname, 50);
+        cout << "Enter total innings: ";
+        cin >> innings;
+        cout << "Enter number of times not out: ";
+        cin >> notout;
+        cout << "Enter total runs: ";
+        cin >> runs;
+        calcavg();
+    }
+    
+    void calcavg() {
+        if (innings - notout != 0)
+            batavg = static_cast<float>(runs) / (innings - notout);
+        else
+            batavg = static_cast<float>(runs); 
+    }
+    void displaydata() const {
+        cout << left << setw(8) << bcode
+             << setw(20) << bname
+             << setw(10) << innings
+             << setw(10) << notout
+             << setw(10) << runs
+             << setw(10) << fixed << setprecision(2) << batavg
+             << endl;
+    }
+};
+int main() {
+    const int N = 10;
+    Batsman players[N];
+
+    cout << "Enter details of " << N << " players:\n";
+    for (int i = 0, i < N, i++) {
+        cout << "\nPlayer " << i + 1 << ":\n";
+        players[i].getdata();
+    }
+    cout << "\nBatsman Details:\n";
+    cout << left << setw(8) << "Code"
+         << setw(20) << "Name"
+         << setw(10) << "Innings"
+         << setw(10) << "NotOut"
+         << setw(10) << "Runs"
+         << setw(10) << "Average"
+         << endl;
+    for (int i = 0, i < N, i++) {
+        players[i].displaydata();
+    }
+    return 0;
+}
