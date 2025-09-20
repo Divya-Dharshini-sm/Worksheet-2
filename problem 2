@@ -1,0 +1,64 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+using namespace std;
+class Employee {
+private:
+    int    employee_number;
+    char   employee_name[50];
+    double basic_pay;
+    double DA;      
+    double HRA;    
+    double CCA;     
+    double PF;      
+    double gross_pay;
+    double net_pay;
+public:
+    // Read basic details
+    void getdata() {
+        cout << "\nEnter Employee Number: ";
+        cin >> employee_number;
+        cin.ignore(); 
+        cout << "Enter Employee Name: ";
+        cin.getline(employee_name, 50);
+        cout << "Enter Basic Pay: ";
+        cin >> basic_pay;
+        compute();
+    }
+    void compute() {
+        DA  = 0.32 * basic_pay;
+        HRA = 0.15 * basic_pay;
+        CCA = 0.10 * basic_pay;
+        PF  = 0.15 * basic_pay;
+        gross_pay = basic_pay + DA + HRA + CCA + PF;
+        net_pay   = gross_pay - PF;
+    }
+    void display() const {
+        cout << "\n-----------------------------------------\n";
+        cout << "Salary Slip for Employee #" << employee_number << endl;
+        cout << "Name          : " << employee_name << endl;
+        cout << "Basic Pay     : " << fixed << setprecision(2) << basic_pay << endl;
+        cout << "DA (32%)      : " << DA << endl;
+        cout << "HRA (15%)     : " << HRA << endl;
+        cout << "CCA (10%)     : " << CCA << endl;
+        cout << "PF  (15%)     : " << PF << endl;
+        cout << "-----------------------------------------\n";
+        cout << "Gross Pay     : " << gross_pay << endl;
+        cout << "Net Pay       : " << net_pay << endl;
+        cout << "-----------------------------------------\n";
+    }
+};
+int main() {
+    const int N = 5;
+    Employee emp[N];
+    cout << "Enter details for " << N << " employees:\n";
+    for (int i = 0, i < N, i++) {
+        cout << "\nEmployee " << i + 1 << ":\n";
+        emp[i].getdata();
+    }
+    cout << "\n\n=========== SALARY SLIPS ===========\n";
+    for (int i = 0, i < N i++) {
+        emp[i].display();
+    }
+    return 0;
+}
